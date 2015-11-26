@@ -90,10 +90,12 @@ function afp_save_featured_meta_data( $post_id ) {
     $fetched_data 	= get_post_meta( $post_id, 'featured', true );
 
     // doing the update or delete the key
-    if( $featured && ! $fetched_data )
+    if( $featured && $featured != $fetched_data )
     	update_post_meta( $post_id, 'featured', esc_html($featured) );
-    elseif( empty($featured) && empty($fetched_data) )
+    elseif( empty($featured) )
     	delete_post_meta( $post_id, 'featured' );
+    elseif( empty($featured) && empty($fetched_data) )
+        delete_post_meta( $post_id, 'featured' );
 
 }
 add_action( 'save_post',        'afp_save_featured_meta_data' );
